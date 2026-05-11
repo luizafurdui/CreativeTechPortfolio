@@ -1,0 +1,172 @@
+.reviews-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.stack {
+  position: relative;
+  width: 480px;
+  height: 470px;
+}
+
+.review-card {
+  position: relative;
+  width: 480px;
+  padding: 10px;
+  background: linear-gradient(135deg, #000000, #141414);
+  border: 1px solid #3a3a3a;
+  border-radius: 22px;
+  color: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    0 10px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.stack-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  touch-action: none;
+  user-select: none;
+}
+
+.stack-card img,
+.stack-card .review-button {
+  pointer-events: none;
+}
+
+.review-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+  flex-shrink: 0;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+.review-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 12px 8px 0;
+  gap: 10px;
+}
+
+.review-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.review-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+.review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.review-tag {
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+.review-button {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(135deg, #000000, #141414);
+  border: 1px solid #3a3a3a;
+  border-radius: 9px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.3s ease,
+    color 0.3s ease;
+}
+
+.review-button:hover {
+  border-color: #5a5a5a;
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-card {
+    will-change: auto;
+  }
+  .review-button {
+    transition: none;
+  }
+  .review-button:hover {
+    transform: none;
+  }
+}
+
+.reviews-container[data-theme="light"] .review-card {
+  background: linear-gradient(135deg, #ffffff, #f4f4f4);
+  border-color: #d6d6d6;
+  color: #111;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.12),
+    0 10px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.reviews-container[data-theme="light"] .review-title {
+  color: #111;
+}
+
+.reviews-container[data-theme="light"] .review-body {
+  color: rgba(0, 0, 0, 0.68);
+}
+
+.reviews-container[data-theme="light"] .review-tag {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.reviews-container[data-theme="light"] .review-button {
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+  border-color: #cfcfcf;
+  color: #111;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.reviews-container[data-theme="light"] .review-button:hover {
+  border-color: #a8a8a8;
+}
+
+.reviews-container[data-theme="light"] .review-image {
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.18),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+}

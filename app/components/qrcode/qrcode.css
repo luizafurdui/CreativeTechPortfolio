@@ -1,0 +1,137 @@
+.qr-component {
+  width: 100%;
+  min-height: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #111;
+  font-family: var(--font-inter), "Inter", system-ui, sans-serif;
+}
+
+.qr-wrapper {
+  position: relative;
+  width: 340px;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 24px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  color: #111;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.qr-button-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qr-button-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.qr-popover {
+  position: absolute;
+  inset: 0;
+  width: 340px;
+  height: 380px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  color: #111;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.18),
+    0 10px 20px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.qr-popover-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+.qr-code-frame {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  border-radius: 14px;
+  padding: 16px;
+  color: #fff;
+}
+
+.qr-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.qr-action {
+  flex: 1;
+  height: 46px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.qr-action-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.qr-action-primary {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.qr-close-btn {
+  flex-shrink: 0;
+  width: 56px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 9999px;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.qr-close-icon {
+  display: block;
+  transform: rotate(45deg);
+}

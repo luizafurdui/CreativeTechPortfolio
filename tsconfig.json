@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "app/components/Details/Details.js", "app/components/Feedback/feedback.js"  ],
   "exclude": ["node_modules"]
 }
