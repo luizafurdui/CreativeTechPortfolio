@@ -28,6 +28,7 @@ export type WorkSection = {
   id: string;
   title: string;
   buttonLabel: string;
+  blurb?: string;
   projects: Project[];
 };
 
@@ -106,8 +107,10 @@ export const workSections: WorkSection[] = [
   },
   {
     id: "rive",
-    title: "Rive Interactions",
+    title: "Interactive Scenes",
     buttonLabel: "Rive",
+    blurb:
+      "Rive really clicked with me instantly, becoming one of the tools I enjoy using the most. It’s the perfect blend of design, animation, and code.",
     projects: [
       {
         title: "Buildings",

@@ -81,10 +81,10 @@ export default function Page() {
 
       <section
         id="home"
-        className="sticky top-0 z-0 flex h-screen items-center px-8 sm:px-16"
+        className="sticky top-0 z-0 flex h-screen items-center px-8 pb-24 sm:px-16"
       >
-        <div className="max-w-300 mx-auto flex h-full w-full items-center">
-          <div className="h-3/4 w-full max-w-2xl">
+        <div className="max-w-300 mx-auto flex h-full w-full items-center justify-center">
+          <div className="h-3/5 w-full max-w-2xl">
             <RivePreview
               src="/rive/aboutme.riv"
               artboard="Artboard"
@@ -94,6 +94,7 @@ export default function Page() {
         </div>
       </section>
 
+      <div className="relative">
       <main
         id="work"
         ref={workRef}
@@ -118,6 +119,32 @@ export default function Page() {
                 }}
                 className="mb-32 min-h-[80vh]"
               >
+                {section.blurb && (
+                  <div className="mb-8 text-[#DEEAFF]">
+                    <h2
+                      className="text-3xl tracking-tight sm:text-4xl"
+                      style={{
+                        fontFamily:
+                          '"Times New Roman", Times, serif',
+                      }}
+                    >
+                      {section.title}
+                    </h2>
+                    <p className="mt-3 max-w-md text-sm font-semibold leading-relaxed text-[#DEEAFF] sm:text-base">
+                      {section.blurb
+                        .split(/\b(design|animation|code)\b/i)
+                        .map((part, i) =>
+                          /^(design|animation|code)$/i.test(part) ? (
+                            <span key={i} className="text-white">
+                              {part}
+                            </span>
+                          ) : (
+                            part
+                          )
+                        )}
+                    </p>
+                  </div>
+                )}
                 <div>
                   <div
                     className={`grid grid-flow-dense grid-cols-1 gap-0.75 ${
@@ -212,6 +239,7 @@ export default function Page() {
       </main>
 
       <ContactFooter />
+      </div>
     </div>
   );
 }

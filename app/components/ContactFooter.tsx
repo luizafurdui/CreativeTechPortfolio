@@ -1,39 +1,95 @@
 "use client";
 
-const LINKS = [
-  { label: "x/twitter", href: "https://x.com/luizafurdui" },
-  { label: "linkedin", href: "https://linkedin.com/in/luizafurdui" },
-  { label: "github", href: "https://github.com/luizafurdui" },
-  { label: "instagram", href: "https://instagram.com/luizafurdui" },
-];
+const X_URL = "https://x.com/luizafurdui";
+const INSTAGRAM_URL = "https://www.instagram.com/luiza_frd/";
+const LINKEDIN_URL = "https://www.linkedin.com/in/furdui-luiza/";
+const GITHUB_URL = "https://github.com/luizafurdui";
 
 export default function ContactFooter() {
   return (
     <section
       id="contact"
-      className="w-full border-t border-neutral-800 bg-[#131210] px-8 py-12 sm:px-16"
+      className="sticky bottom-0 z-0 w-full bg-[#131210] px-8 py-16 sm:px-16"
     >
-      <div className="mx-auto flex max-w-300 flex-col gap-4">
-        <p
-          className="text-xl lowercase tracking-tight text-neutral-400"
-          style={{ fontFamily: "var(--font-inter)" }}
-        >
-          want to reach out?
-        </p>
+      <div className="mx-auto max-w-300">
+        <div className="rounded-2xl border border-neutral-700 p-0.75">
+          <div
+            className="w-full rounded-xl bg-linear-to-br from-[#131310] to-[#1E1D1C] px-10 py-12 sm:px-14"
+            style={{ fontFamily: "var(--font-inter)" }}
+          >
+            <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-sm text-[#DEEAFF]">
+                <h2
+                  className="text-3xl tracking-tight sm:text-4xl"
+                  style={{ fontFamily: '"Times New Roman", Times, serif' }}
+                >
+                  Want to reach out?
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-[#DEEAFF]/80 sm:text-base">
+                  I&apos;m most active on{" "}
+                  <a
+                    href={X_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#DEEAFF] underline underline-offset-4 decoration-[#DEEAFF]/40 hover:decoration-[#DEEAFF]"
+                  >
+                    Twitter
+                  </a>
+                  , so feel free to reach out there. See some of my early
+                  digital art and the beginnings of my creative journey on{" "}
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#DEEAFF] underline underline-offset-4 decoration-[#DEEAFF]/40 hover:decoration-[#DEEAFF]"
+                  >
+                    Instagram
+                  </a>
+                  .
+                </p>
+              </div>
 
-        <div className="flex flex-wrap items-center gap-4">
-          {LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xl lowercase tracking-tight text-neutral-200 underline underline-offset-4 transition-colors hover:text-white"
-              style={{ fontFamily: "var(--font-inter)" }}
-            >
-              {link.label}
-            </a>
-          ))}
+              <div className="flex gap-12 text-base lg:items-start">
+                <div className="flex flex-col gap-3">
+                  <a
+                    href={X_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-400 transition-colors hover:text-white"
+                  >
+                    X/Twitter
+                  </a>
+                  <a
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-400 transition-colors hover:text-white"
+                  >
+                    LinkedIn
+                  </a>
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-400 transition-colors hover:text-white"
+                  >
+                    Instagram
+                  </a>
+                </div>
+
+                <div className="flex flex-col">
+                  <a
+                    href={GITHUB_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-400 transition-colors hover:text-white"
+                  >
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
