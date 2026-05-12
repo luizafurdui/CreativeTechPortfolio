@@ -46,7 +46,7 @@ export default function Page() {
           }
         }
 
-        if (mostVisible && mostVisible.ratio > 0.15) {
+        if (mostVisible && mostVisible.ratio > 0.05) {
           setActiveWorkSection((prev) =>
             prev === mostVisible!.id ? prev : mostVisible!.id
           );
@@ -65,17 +65,25 @@ export default function Page() {
     return () => observer.disconnect();
   }, [inWork]);
 
-  const activeWorkLabel = useMemo(() => {
+  const effectiveActiveWorkSection = useMemo(() => {
     if (!inWork) return null;
-    if (!activeWorkSection) return null;
-    return workSections.find((s) => s.id === activeWorkSection)?.buttonLabel ?? null;
+    if (activeWorkSection) return activeWorkSection;
+    return workSections[0]?.id ?? null;
   }, [inWork, activeWorkSection]);
+
+  const activeWorkLabel = useMemo(() => {
+    if (!effectiveActiveWorkSection) return null;
+    return (
+      workSections.find((s) => s.id === effectiveActiveWorkSection)
+        ?.buttonLabel ?? null
+    );
+  }, [effectiveActiveWorkSection]);
 
   return (
     <div className="relative w-full min-h-screen text-neutral-100 bg-[#131210]">
       <Navbar
         inWork={inWork}
-        activeWorkId={activeWorkSection}
+        activeWorkId={effectiveActiveWorkSection}
         activeWorkLabel={activeWorkLabel}
       />
 

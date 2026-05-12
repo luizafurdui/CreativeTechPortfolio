@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 const FLOWERS = [
   "/cactus/C1.svg",
@@ -45,8 +45,6 @@ export default function CactusGrid() {
 
   const tiles = useMemo<Tile[]>(() => {
     const list: Tile[] = [];
-
-    // Iterate back row first so front rows render on top in DOM order.
     for (let r = ROWS - 1; r >= 0; r--) {
       const xOffset = r % 2 === 0 ? 0 : -BLOCK_W / 2;
       for (let c = 0; c < COLS; c++) {
@@ -64,20 +62,34 @@ export default function CactusGrid() {
     return list;
   }, []);
 
-  const reveal = (key: string) => {
+  const reveal = useCallback((key: string) => {
     setRevealed((prev) => {
       if (prev.has(key)) return prev;
       const next = new Set(prev);
       next.add(key);
       return next;
     });
-  };
+  }, []);
+
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent<HTMLDivElement>) => {
+      for (const touch of Array.from(e.touches)) {
+        const el = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (el instanceof HTMLElement) {
+          const tileKey = el.dataset.tileKey;
+          if (tileKey) reveal(tileKey);
+        }
+      }
+    },
+    [reveal]
+  );
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-white">
       <div
-        className="absolute bottom-0 left-0 right-0"
-        style={{ height: FLOOR_HEIGHT }}
+        className="absolute bottom-0 left-0 right-0 origin-bottom-left scale-[0.45] sm:scale-[0.6] md:scale-[0.8] lg:scale-100"
+        style={{ height: FLOOR_HEIGHT, touchAction: "pan-y" }}
+        onTouchMove={handleTouchMove}
       >
         {tiles.map((tile) => {
           const isRevealed = revealed.has(tile.key);
@@ -101,6 +113,7 @@ export default function CactusGrid() {
               />
 
               <div
+                data-tile-key={tile.key}
                 className="absolute cursor-pointer"
                 style={{
                   left: 0,
@@ -111,6 +124,8 @@ export default function CactusGrid() {
                   pointerEvents: "auto",
                 }}
                 onMouseEnter={() => reveal(tile.key)}
+                onClick={() => reveal(tile.key)}
+                onTouchStart={() => reveal(tile.key)}
               />
 
               <img
