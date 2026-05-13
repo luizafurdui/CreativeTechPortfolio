@@ -110,7 +110,9 @@ export default function ProjectCard({
       )}
 
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 flex items-baseline justify-between gap-3 px-4 py-3 text-sm lowercase tracking-tight text-black"
+        className={`pointer-events-none absolute inset-x-0 bottom-0 flex items-baseline justify-between gap-3 px-4 py-3 text-sm lowercase tracking-tight ${
+          slug === "snapshots" ? "text-white" : "text-black"
+        }`}
         style={{ fontFamily: "var(--font-inter)" }}
       >
         <span className="truncate font-normal">[ {title} ]</span>

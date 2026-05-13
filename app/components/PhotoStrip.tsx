@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 type Photo = {
@@ -75,9 +75,22 @@ const PHOTOS: Photo[] = [
 const EXPAND_EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 const EXPAND_DURATION = 0.45;
 const HOVER_SPRING = { type: "spring" as const, stiffness: 500, damping: 28 };
+const ACTIVE_SCALE = 1.55;
 
 export default function PhotoStrip() {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(min-width: 640px)");
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const activeScale = isDesktop ? ACTIVE_SCALE : 1;
 
   return (
     <>
@@ -100,7 +113,7 @@ export default function PhotoStrip() {
               : PHOTOS.length - i;
 
           const animateTo = isActive
-            ? { rotate: 0, scale: 1 }
+            ? { rotate: 0, scale: activeScale }
             : { rotate: photo.angle, scale: 1 };
 
           const transition = isActive
@@ -177,25 +190,52 @@ export default function PhotoStrip() {
               )}
 
               {isActive && (
-                <motion.div
-                  initial={{ opacity: 0, y: -6, filter: "blur(4px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{
-                    duration: 0.45,
-                    delay: 0.05,
-                    ease: [0.165, 0.84, 0.44, 1],
-                  }}
-                  className={`rounded-2xl border border-white/20 bg-white/15 px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.25)] backdrop-blur-md backdrop-saturate-150 ${
-                    textBeside
-                      ? "flex-1 self-stretch flex items-center sm:flex-none sm:w-full sm:max-w-sm sm:self-auto sm:items-start sm:mt-4"
-                      : "mt-4 w-full max-w-xs sm:max-w-sm"
-                  }`}
-                  style={{ fontFamily: "var(--font-inter)" }}
-                >
-                  <p className="text-xs font-semibold leading-relaxed text-white sm:text-sm">
-                    {photo.description}
-                  </p>
-                </motion.div>
+                <>
+                  {/* Mobile description: in flow next to or below the photo */}
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      duration: 0.45,
+                      delay: 0.05,
+                      ease: [0.165, 0.84, 0.44, 1],
+                    }}
+                    className={`rounded-2xl border border-white/20 bg-white/15 px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.25)] backdrop-blur-md backdrop-saturate-150 sm:hidden ${
+                      textBeside
+                        ? "flex-1 self-stretch flex items-center"
+                        : "mt-4 w-full max-w-xs"
+                    }`}
+                    style={{ fontFamily: "var(--font-inter)" }}
+                  >
+                    <p className="text-xs font-semibold leading-relaxed text-white">
+                      {photo.description}
+                    </p>
+                  </motion.div>
+
+                  {/* Desktop description: absolute, to the right of the photo */}
+                  <div
+                    className="pointer-events-auto absolute -top-16 z-50 hidden w-64 rounded-4xl border border-white/30 bg-white/25 px-5 py-4 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.25)] backdrop-blur-xl backdrop-saturate-150 sm:-top-20 sm:block"
+                    style={{
+                      left:
+                        photo.src === "/aiArt.png"
+                          ? "calc(115% + 0px)"
+                          : "calc(127.5% + 6px)",
+                      fontFamily: "var(--font-inter)",
+                    }}
+                  >
+                    <motion.p
+                      initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      transition={{
+                        duration: 0.55,
+                        ease: [0.165, 0.84, 0.44, 1],
+                      }}
+                      className="text-sm font-semibold leading-relaxed text-white"
+                    >
+                      {photo.description}
+                    </motion.p>
+                  </div>
+                </>
               )}
             </motion.div>
           );
