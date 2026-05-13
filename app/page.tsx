@@ -31,7 +31,7 @@ export default function Page() {
       } catch {
         // ignore
       }
-    }, 1000);
+    }, 400);
     return () => clearTimeout(t);
   }, []);
 
