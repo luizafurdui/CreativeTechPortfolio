@@ -12,10 +12,12 @@ export default function Navbar({
   inWork,
   activeWorkId,
   activeWorkLabel,
+  activeNav,
 }: {
   inWork: boolean;
   activeWorkId: string | null;
   activeWorkLabel: string | null;
+  activeNav?: "home" | "work" | "contact";
 }) {
   const visible = Boolean(inWork && activeWorkId && activeWorkLabel);
 
@@ -52,7 +54,9 @@ export default function Navbar({
               <button
                 type="button"
                 onClick={() => scrollTo(item.id)}
-                className="rounded-md px-3 py-1 font-semibold tracking-tight text-[#DEEAFF]"
+                className={`rounded-md px-3 py-1 font-semibold tracking-tight transition-colors ${
+                  activeNav === item.id ? "text-white" : "text-[#DEEAFF]/50"
+                }`}
               >
                 {item.label}
               </button>

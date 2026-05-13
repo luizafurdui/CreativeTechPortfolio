@@ -9,13 +9,41 @@ import ContactFooter from "./components/ContactFooter";
 import RivePreview from "./components/RivePreview";
 import { workSections } from "./data/workSections";
 
-type VisibleSection = { id: string; ratio: number };
-
 
 
 export default function Page() {
   const [activeWorkSection, setActiveWorkSection] = useState<string | null>(null);
+  const [activeNav, setActiveNav] = useState<"home" | "work" | "contact">("home");
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const viewportHeight = window.innerHeight;
+      const viewportCenter = viewportHeight / 2;
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      const workEl = document.getElementById("work");
+      if (!workEl) return;
+      const workRect = workEl.getBoundingClientRect();
+      const atBottom = scrollY + viewportHeight >= docHeight - 80;
+
+      if (atBottom) {
+        setActiveNav("contact");
+      } else if (workRect.top > viewportCenter) {
+        setActiveNav("home");
+      } else {
+        setActiveNav("work");
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -49,37 +77,21 @@ export default function Page() {
       return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
-        let mostVisible: VisibleSection | undefined;
+    const handleScroll = () => {
+      const viewportCenter = window.innerHeight / 2;
+      const riveEl = document.getElementById("rive");
+      if (!riveEl) return;
+      const riveTop = riveEl.getBoundingClientRect().top;
+      setActiveWorkSection(riveTop < viewportCenter ? "rive" : "interactive");
+    };
 
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const el = entry.target as HTMLElement;
-          const ratio = entry.intersectionRatio ?? 0;
-
-          if (!mostVisible || ratio > mostVisible.ratio) {
-            mostVisible = { id: el.id, ratio };
-          }
-        }
-
-        if (mostVisible && mostVisible.ratio > 0.05) {
-          setActiveWorkSection((prev) =>
-            prev === mostVisible!.id ? prev : mostVisible!.id
-          );
-        }
-      },
-      {
-        threshold: [0, 0.15, 0.3, 0.5, 0.7],
-        rootMargin: "-100px 0px -50% 0px",
-      }
-    );
-
-    sectionRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, [inWork]);
 
   const effectiveActiveWorkSection = useMemo(() => {
@@ -102,6 +114,7 @@ export default function Page() {
         inWork={inWork}
         activeWorkId={effectiveActiveWorkSection}
         activeWorkLabel={activeWorkLabel}
+        activeNav={activeNav}
       />
 
       <section
