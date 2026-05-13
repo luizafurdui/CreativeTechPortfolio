@@ -11,12 +11,10 @@ import { workSections } from "./data/workSections";
 
 type VisibleSection = { id: string; ratio: number };
 
-const INITIAL_VISIBLE = 5;
 
 
 export default function Page() {
   const [activeWorkSection, setActiveWorkSection] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -184,9 +182,7 @@ export default function Page() {
                     }`}
                   >
                     <AnimatePresence initial={false} mode="popLayout">
-                      {section.projects
-                        .slice(0, showAll ? section.projects.length : INITIAL_VISIBLE)
-                        .map((project, i) => {
+                      {section.projects.map((project, i) => {
                           const size = project.size || "default";
                           const sizeRowSpan = {
                             short: "row-span-3",
@@ -251,17 +247,6 @@ export default function Page() {
                   </div>
                 </div>
 
-                {section.projects.length > INITIAL_VISIBLE && (
-                  <div className="mt-6 flex justify-end">
-                    <button
-                      type="button"
-                      onClick={() => setShowAll((v) => !v)}
-                      className="text-sm lowercase tracking-tight text-blue-600 hover:text-blue-700 transition-colors cursor-pointer font-mono"
-                    >
-                      {showAll ? "Show less" : "See more"}
-                    </button>
-                  </div>
-                )}
               </motion.section>
             ))}
           </div>
