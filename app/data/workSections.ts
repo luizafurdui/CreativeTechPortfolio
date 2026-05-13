@@ -16,7 +16,7 @@ export type Project = {
   riveArtboard?: string;
   riveStateMachine?: string;
   riveFit?: "contain" | "cover" | "fill" | "fitWidth" | "fitHeight";
-  framerComponentKey?: "feedbackslides" | "qrcode" | "w1" | "shaders" | "animatingMenu" | "dynamicIsland" | "iconsMenu" | "details" | "multistep" | "pagePilot" | "cactusGarden";
+  framerComponentKey?: "feedbackslides" | "qrcode" | "w1" | "shaders" | "animatingMenu" | "dynamicIsland" | "iconsMenu" | "details" | "multistep" | "pagePilot" | "cactusGarden" | "photoStrip";
 
   date?: string;
 
@@ -38,6 +38,23 @@ export const workSections: WorkSection[] = [
     title: "Interactive Components",
     buttonLabel: "Framer Motion",
     projects: [
+      {
+        title: "Snapshots",
+        slug: "snapshots",
+        description: "A few photos from my creative journey.",
+        video: "/framerMotion/photoStrip.mp4",
+        date: "05.2026",
+        size: "default",
+      },
+      {
+        title: "Shake it",
+        slug: "shake-it",
+        description:
+          "Draggable paper envelope with photos that sway with momentum.",
+        video: "/framerMotion/envelope.mp4",
+        date: "05.2026",
+        size: "default",
+      },
       {
         title: "Shaders",
         slug: "shaders",
@@ -93,15 +110,6 @@ export const workSections: WorkSection[] = [
         video: "/framerMotion/multistep.mp4",
         date: "01.2026",
         size: "short",
-      },
-      {
-        title: "Shake it",
-        slug: "shake-it",
-        description:
-          "Draggable paper envelope with photos that sway with momentum.",
-        video: "/framerMotion/envelope.mp4",
-        date: "05.2026",
-        size: "default",
       },
     ],
   },

@@ -186,9 +186,9 @@ export default function Page() {
                           };
                           const colSpanClass =
                             section.id === "interactive"
-                              ? i < 3
-                                ? "lg:col-span-2"
-                                : "lg:col-span-3"
+                              ? i < 2
+                                ? "lg:col-span-3"
+                                : "lg:col-span-2"
                               : project.cols
                                 ? colSpanMap[project.cols] ?? ""
                                 : "";

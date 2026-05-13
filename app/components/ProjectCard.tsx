@@ -33,7 +33,7 @@ type ProjectCardProps = {
   riveArtboard?: string;
   riveStateMachine?: string;
   riveFit?: "contain" | "cover" | "fill" | "fitWidth" | "fitHeight";
-  framerComponentKey?: "feedbackslides" | "qrcode" | "w1" | "shaders" | "animatingMenu" | "dynamicIsland" | "iconsMenu" | "details" | "multistep" | "pagePilot" | "cactusGarden";
+  framerComponentKey?: "feedbackslides" | "qrcode" | "w1" | "shaders" | "animatingMenu" | "dynamicIsland" | "iconsMenu" | "details" | "multistep" | "pagePilot" | "cactusGarden" | "photoStrip";
   date?: string;
 };
 

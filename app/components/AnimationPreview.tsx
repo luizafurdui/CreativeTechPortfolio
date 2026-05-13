@@ -11,7 +11,7 @@ type AnimationPreviewProps = {
   riveArtboard?: string;
   riveStateMachine?: string;
   riveFit?: FitMode;
-  framerComponentKey?: "feedbackslides" | "qrcode" | "w1" | "shaders" | "animatingMenu" | "dynamicIsland" | "iconsMenu" | "details" | "multistep" | "pagePilot" | "cactusGarden";
+  framerComponentKey?: "feedbackslides" | "qrcode" | "w1" | "shaders" | "animatingMenu" | "dynamicIsland" | "iconsMenu" | "details" | "multistep" | "pagePilot" | "cactusGarden" | "photoStrip";
 };
 
 export default function AnimationPreview({
@@ -72,6 +72,9 @@ export default function AnimationPreview({
         break;
       case "cactusGarden":
         FramerComponent = lazy(() => import("./CactusGrid"));
+        break;
+      case "photoStrip":
+        FramerComponent = lazy(() => import("./PhotoStrip"));
         break;
       default:
         return null;
