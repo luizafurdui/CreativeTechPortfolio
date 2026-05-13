@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 const X_URL = "https://x.com/luizafurdui";
 const INSTAGRAM_URL = "https://www.instagram.com/luiza_frd/";
 const LINKEDIN_URL = "https://www.linkedin.com/in/furdui-luiza/";
@@ -12,6 +14,8 @@ const SOCIALS = [
   { label: "GitHub", href: GITHUB_URL },
 ];
 
+const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
+
 export default function ContactFooter() {
   return (
     <section
@@ -20,7 +24,13 @@ export default function ContactFooter() {
       style={{ fontFamily: "var(--font-inter)" }}
     >
       <div className="mx-auto flex max-w-300 flex-col gap-16">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+        <motion.div
+          className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15% 0px -15% 0px" }}
+          transition={{ duration: 0.8, ease: EASE }}
+        >
           <h2
             className="text-5xl leading-[1.05] tracking-tight text-[#DEEAFF] sm:text-6xl lg:text-7xl"
             style={{ fontFamily: '"Times New Roman", Times, serif' }}
@@ -50,7 +60,7 @@ export default function ContactFooter() {
             </a>
             .
           </p>
-        </div>
+        </motion.div>
 
         <div className="flex flex-wrap items-center justify-between gap-6 pt-2.5 text-sm">
           <div className="flex flex-wrap items-center gap-7.5">

@@ -193,28 +193,42 @@ export default function PhotoStrip() {
                 <>
                   {/* Mobile description: in flow next to or below the photo */}
                   <motion.div
-                    initial={{ opacity: 0, y: -6, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
                     transition={{
-                      duration: 0.45,
-                      delay: 0.05,
+                      duration: 0.28,
                       ease: [0.165, 0.84, 0.44, 1],
                     }}
-                    className={`rounded-2xl border border-white/20 bg-white/15 px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.25)] backdrop-blur-md backdrop-saturate-150 sm:hidden ${
+                    className={`overflow-hidden rounded-[9px] border border-[#5F87FF]/30 bg-[#4571DD] shadow-[0_8px_24px_rgba(0,0,0,0.25)] sm:hidden ${
                       textBeside
-                        ? "flex-1 self-stretch flex items-center"
+                        ? "flex-1"
                         : "mt-4 w-full max-w-xs"
                     }`}
                     style={{ fontFamily: "var(--font-inter)" }}
                   >
-                    <p className="text-xs font-semibold leading-relaxed text-white">
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        duration: 0.2,
+                        delay: 0.18,
+                        ease: [0.165, 0.84, 0.44, 1],
+                      }}
+                      className="px-4 py-3 text-xs font-semibold leading-relaxed text-[#DEEAFF]"
+                    >
                       {photo.description}
-                    </p>
+                    </motion.p>
                   </motion.div>
 
                   {/* Desktop description: absolute, to the right of the photo */}
-                  <div
-                    className="pointer-events-auto absolute -top-16 z-50 hidden w-64 rounded-4xl border border-white/30 bg-white/25 px-5 py-4 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.25)] backdrop-blur-xl backdrop-saturate-150 sm:-top-20 sm:block"
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    transition={{
+                      duration: 0.3,
+                      ease: [0.165, 0.84, 0.44, 1],
+                    }}
+                    className="pointer-events-auto absolute -top-16 z-50 hidden w-64 overflow-hidden rounded-[9px] border border-[#5F87FF]/30 bg-[#4571DD] shadow-[0_12px_32px_-8px_rgba(0,0,0,0.25)] sm:-top-20 sm:block"
                     style={{
                       left:
                         photo.src === "/aiArt.png"
@@ -224,17 +238,18 @@ export default function PhotoStrip() {
                     }}
                   >
                     <motion.p
-                      initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
-                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      initial={{ opacity: 0, filter: "blur(6px)" }}
+                      animate={{ opacity: 1, filter: "blur(0px)" }}
                       transition={{
-                        duration: 0.55,
+                        duration: 0.25,
+                        delay: 0.2,
                         ease: [0.165, 0.84, 0.44, 1],
                       }}
-                      className="text-sm font-semibold leading-relaxed text-white"
+                      className="px-5 py-4 text-sm font-semibold leading-relaxed text-[#DEEAFF]"
                     >
                       {photo.description}
                     </motion.p>
-                  </div>
+                  </motion.div>
                 </>
               )}
             </motion.div>
