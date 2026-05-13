@@ -17,6 +17,12 @@ const INITIAL_VISIBLE = 5;
 export default function Page() {
   const [activeWorkSection, setActiveWorkSection] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(t);
+  }, []);
 
   const { ref: workRef, inView: inWork } = useInView({
     threshold: 0,
@@ -81,6 +87,20 @@ export default function Page() {
 
   return (
     <div className="relative w-full min-h-screen text-neutral-100 bg-[#131210]">
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            key="portfolio-loader"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            className="fixed inset-0 z-100 flex items-center justify-center bg-[#131210]"
+          >
+            <div className="portfolio-loader" />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <Navbar
         inWork={inWork}
         activeWorkId={effectiveActiveWorkSection}
@@ -93,11 +113,13 @@ export default function Page() {
       >
         <div className="max-w-300 mx-auto flex h-full w-full items-center justify-center">
           <div className="h-3/5 w-full max-w-2xl">
-            <RivePreview
-              src="/rive/aboutme.riv"
-              artboard="Artboard"
-              fit="contain"
-            />
+            {!isLoading && (
+              <RivePreview
+                src="/rive/aboutme.riv"
+                artboard="Artboard"
+                fit="contain"
+              />
+            )}
           </div>
         </div>
       </section>

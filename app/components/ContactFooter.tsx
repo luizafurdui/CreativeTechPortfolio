@@ -52,28 +52,31 @@ export default function ContactFooter() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-7.5 pt-2.5 text-sm">
-          <div className="flex flex-wrap items-center gap-2.5">
-            {SOCIALS.filter((s) => s.label !== "GitHub").map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-400 transition-colors hover:text-white"
-              >
-                {link.label}
-              </a>
-            ))}
+        <div className="flex flex-wrap items-center justify-between gap-6 pt-2.5 text-sm">
+          <div className="flex flex-wrap items-center gap-7.5">
+            <div className="flex flex-wrap items-center gap-2.5">
+              {SOCIALS.filter((s) => s.label !== "GitHub").map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-400 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-400 transition-colors hover:text-white"
+            >
+              GitHub
+            </a>
           </div>
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-neutral-400 transition-colors hover:text-white"
-          >
-            GitHub
-          </a>
+          <p className="text-xs text-neutral-500">© 2026 luiza</p>
         </div>
       </div>
     </section>
