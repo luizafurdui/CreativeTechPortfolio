@@ -15,10 +15,23 @@ type VisibleSection = { id: string; ratio: number };
 
 export default function Page() {
   const [activeWorkSection, setActiveWorkSection] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 2000);
+    if (typeof window === "undefined") return;
+    if (sessionStorage.getItem("portfolio-loaded")) {
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(true);
+    const t = setTimeout(() => {
+      setIsLoading(false);
+      try {
+        sessionStorage.setItem("portfolio-loaded", "1");
+      } catch {
+        // ignore
+      }
+    }, 1000);
     return () => clearTimeout(t);
   }, []);
 
@@ -85,20 +98,6 @@ export default function Page() {
 
   return (
     <div className="relative w-full min-h-screen text-neutral-100 bg-[#131210]">
-      <AnimatePresence>
-        {isLoading && (
-          <motion.div
-            key="portfolio-loader"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-0 z-100 flex items-center justify-center bg-[#131210]"
-          >
-            <div className="portfolio-loader" />
-          </motion.div>
-        )}
-      </AnimatePresence>
       <Navbar
         inWork={inWork}
         activeWorkId={effectiveActiveWorkSection}

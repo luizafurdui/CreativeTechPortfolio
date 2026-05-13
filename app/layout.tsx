@@ -27,7 +27,7 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   title: "Luiza Furdui",
-  description: "Portfolio of Luiza Furdui — design, animation, code.",
+  description: "Portfolio of Luiza Furdui. Design, animation, and code.",
 };
 
 
