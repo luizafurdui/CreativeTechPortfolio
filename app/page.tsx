@@ -106,10 +106,10 @@ export default function Page() {
 
       <section
         id="home"
-        className="sticky top-0 z-0 flex h-screen items-center px-8 pb-24 sm:px-16"
+        className="sticky top-0 z-0 flex h-dvh items-center justify-center px-4 py-12 sm:px-8"
       >
-        <div className="max-w-300 mx-auto flex h-full w-full items-center justify-center">
-          <div className="h-3/5 w-full max-w-2xl">
+        <div className="flex h-full w-full max-w-350 items-center justify-center">
+          <div className="h-full w-full max-h-[80dvh] max-w-3xl sm:max-h-[60dvh] sm:max-w-2xl">
             {!isLoading && (
               <RivePreview
                 src="/rive/aboutme.riv"

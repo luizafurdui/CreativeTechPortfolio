@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Alignment, Fit, Layout, useRive } from "@rive-app/react-canvas";
 
 type FitMode = "contain" | "cover" | "fill" | "fitWidth" | "fitHeight";
@@ -25,7 +26,8 @@ export default function RivePreview({
   stateMachines,
   fit = "cover",
 }: Props) {
-  const { RiveComponent } = useRive({
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { rive, RiveComponent } = useRive({
     src,
     artboard,
     stateMachines,
@@ -36,5 +38,26 @@ export default function RivePreview({
     }),
   });
 
-  return <RiveComponent className="h-full w-full" />;
+  useEffect(() => {
+    if (!rive) return;
+    const handleResize = () => {
+      rive.resizeDrawingSurfaceToCanvas();
+    };
+    handleResize();
+    const observer = new ResizeObserver(handleResize);
+    if (containerRef.current) observer.observe(containerRef.current);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, [rive]);
+
+  return (
+    <div ref={containerRef} className="h-full w-full">
+      <RiveComponent className="h-full w-full" />
+    </div>
+  );
 }
