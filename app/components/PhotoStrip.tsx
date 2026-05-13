@@ -12,20 +12,12 @@ type Photo = {
   caption?: string;
   title: string;
   description: string;
+  textPosition?: "right" | "left" | "below";
 };
 
-const FRAMED_SIZE = "h-48 w-48 sm:h-56 sm:w-56";
+const FRAMED_SIZE = "h-32 w-32 sm:h-56 sm:w-56";
 
 const PHOTOS: Photo[] = [
-  {
-    src: "/mugs.png",
-    alt: "Mugs",
-    angle: -6,
-    framed: true,
-    caption: "feb 2025",
-    title: "Coffee Mugs",
-    description: "painting mugs :)",
-  },
   {
     src: "/NY.png",
     alt: "New York",
@@ -35,6 +27,7 @@ const PHOTOS: Photo[] = [
     title: "New York 2025",
     description:
       "On my bucket list was going to the United States. I think a part of my design journey already started there.",
+    textPosition: "right",
   },
   {
     src: "/book.png",
@@ -43,6 +36,17 @@ const PHOTOS: Photo[] = [
     framed: false,
     title: "Currently Reading",
     description: "A book I keep getting back to.",
+    textPosition: "below",
+  },
+  {
+    src: "/mugs.png",
+    alt: "Mugs",
+    angle: -6,
+    framed: true,
+    caption: "feb 2025",
+    title: "Coffee Mugs",
+    description: "painting mugs :)",
+    textPosition: "below",
   },
   {
     src: "/js.png",
@@ -50,10 +54,11 @@ const PHOTOS: Photo[] = [
     angle: 6,
     framed: true,
     caption: "JobShop® 2026",
-    imgClass: "h-64 w-48 sm:h-80 sm:w-56",
+    imgClass: "h-40 w-32 sm:h-80 sm:w-56",
     title: "JobShop® 2026",
     description:
       "Being part of the team organising a career event in Cluj. It was my first branding project and the longest one I had worked on, (6 months). We ended up with 1,231 participants and 9 partner companies.",
+    textPosition: "right",
   },
   {
     src: "/aiArt.png",
@@ -63,13 +68,13 @@ const PHOTOS: Photo[] = [
     title: "AI Art",
     description:
       "Generated with Midjourney. I had my fun with AI-generated photos, but I quickly realised I always had to give it good references to get something I actually liked. It didn't last long, but it was a fun experiment.",
+    textPosition: "left",
   },
 ];
 
 const EXPAND_EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 const EXPAND_DURATION = 0.45;
 const HOVER_SPRING = { type: "spring" as const, stiffness: 500, damping: 28 };
-const ACTIVE_SCALE = 1.55;
 
 export default function PhotoStrip() {
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -84,7 +89,7 @@ export default function PhotoStrip() {
         />
       )}
 
-      <div className="flex flex-wrap items-center justify-center py-6 -space-x-6 sm:-space-x-10">
+      <div className="grid grid-cols-2 place-items-start gap-3 px-4 py-6 sm:flex sm:flex-wrap sm:items-start sm:justify-center sm:gap-0 sm:px-0 sm:-space-x-10">
         {PHOTOS.map((photo, i) => {
           const isActive = activeId === photo.src;
           const hoverAngle = photo.angle + (photo.angle >= 0 ? 4 : -4);
@@ -95,7 +100,7 @@ export default function PhotoStrip() {
               : PHOTOS.length - i;
 
           const animateTo = isActive
-            ? { rotate: 0, scale: ACTIVE_SCALE }
+            ? { rotate: 0, scale: 1 }
             : { rotate: photo.angle, scale: 1 };
 
           const transition = isActive
@@ -111,10 +116,24 @@ export default function PhotoStrip() {
             setActiveId(isActive ? null : photo.src);
           };
 
+          const textOnRight = photo.textPosition === "right";
+          const textOnLeft = photo.textPosition === "left";
+          const textBeside = textOnRight || textOnLeft;
+
           return (
-            <div
+            <motion.div
               key={photo.src}
-              className="relative"
+              layout
+              transition={{
+                layout: { duration: 0.45, ease: EXPAND_EASE },
+              }}
+              className={`relative col-span-2 flex items-center ${
+                textBeside
+                  ? textOnRight
+                    ? "flex-row justify-start gap-3"
+                    : "flex-row-reverse justify-start gap-3"
+                  : "flex-col"
+              } sm:col-auto sm:flex-col sm:items-center sm:gap-0`}
               style={{ zIndex }}
             >
               {!photo.framed ? (
@@ -122,7 +141,7 @@ export default function PhotoStrip() {
                   src={photo.src}
                   alt={photo.alt}
                   draggable={false}
-                  className="relative block h-56 w-auto cursor-pointer select-none drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:h-72"
+                  className="relative block h-36 w-auto cursor-pointer select-none drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:h-72"
                   initial={{ rotate: photo.angle }}
                   animate={animateTo}
                   whileHover={hoverProps}
@@ -158,30 +177,27 @@ export default function PhotoStrip() {
               )}
 
               {isActive && (
-                <div
-                  className="pointer-events-auto absolute -top-16 z-50 w-64 rounded-4xl border border-white/30 bg-white/25 px-5 py-4 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.25)] backdrop-blur-xl backdrop-saturate-150 sm:-top-20"
-                  style={{
-                    left:
-                      photo.src === "/aiArt.png"
-                        ? "calc(115% + 0px)"
-                        : "calc(127.5% + 6px)",
-                    fontFamily: "var(--font-inter)",
+                <motion.div
+                  initial={{ opacity: 0, y: -6, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{
+                    duration: 0.45,
+                    delay: 0.05,
+                    ease: [0.165, 0.84, 0.44, 1],
                   }}
+                  className={`rounded-2xl border border-white/20 bg-white/15 px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.25)] backdrop-blur-md backdrop-saturate-150 ${
+                    textBeside
+                      ? "flex-1 self-stretch flex items-center sm:flex-none sm:w-full sm:max-w-sm sm:self-auto sm:items-start sm:mt-4"
+                      : "mt-4 w-full max-w-xs sm:max-w-sm"
+                  }`}
+                  style={{ fontFamily: "var(--font-inter)" }}
                 >
-                  <motion.p
-                    initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{
-                      duration: 0.55,
-                      ease: [0.165, 0.84, 0.44, 1],
-                    }}
-                    className="text-sm font-semibold leading-relaxed text-white"
-                  >
+                  <p className="text-xs font-semibold leading-relaxed text-white sm:text-sm">
                     {photo.description}
-                  </motion.p>
-                </div>
+                  </p>
+                </motion.div>
               )}
-            </div>
+            </motion.div>
           );
         })}
       </div>
