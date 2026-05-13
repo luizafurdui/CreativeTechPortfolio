@@ -57,12 +57,6 @@ export default function MultiStepComponent() {
           <img
             src={step.image}
             alt=""
-            aria-hidden
-            className="step-image-glow"
-          />
-          <img
-            src={step.image}
-            alt=""
             className="step-image"
           />
         </div>
