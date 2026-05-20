@@ -13,7 +13,7 @@ import {
 import { useOnClickOutside } from "usehooks-ts";
 import "./frame.css";
 
-const ACTIVE_SCALE = 2.5;
+const ACTIVE_SCALE = 1.6;
 
 const PHOTOS = [
   {
@@ -39,7 +39,7 @@ const PHOTOS = [
     nativeH: 200,
   },
   {
-    src: "/footer/plic/flower.png",
+    src: "/footer/plic/flower.png?v=2",
     cls: "plic-photo--flower",
     dir: 1,
     factor: 0.95,
@@ -116,6 +116,11 @@ function PlicPhoto({
         height={nativeH}
         style={{ width: "100%", height: "auto", display: "block" }}
         draggable={false}
+        initial={false}
+        transition={{
+          layout: { duration: 0.5, ease: [0.23, 1, 0.32, 1] },
+          default: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
+        }}
       />
     </motion.div>
   );
@@ -209,6 +214,11 @@ export default function EnvelopeFrame({ dragConstraints } = {}) {
                     className="photo-fullscreen"
                     ref={innerRef}
                     draggable={false}
+                    initial={false}
+                    transition={{
+                      layout: { duration: 0.5, ease: [0.23, 1, 0.32, 1] },
+                      default: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
+                    }}
                   />
                 </div>
               );
